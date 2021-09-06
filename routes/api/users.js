@@ -8,14 +8,22 @@ const keys = require('../../config/keys').JWT_SECRET;
 const passport = require('passport');
 
 
-
+// validate register;
+const validateRegisterInput = require('../../validation/register')
 
 // register route
 router.post('/register',  async (req, res) => {
-    const checkEmail = await User.findOne({email: req.body.email})
-    try{
-        if(checkEmail) {
-            return res.status(400).json({email: "Email is already exist"})
+    const {errors, isValid} = validateRegisterInput(req.body)
+    const user =  await User.findOne({email: req.body.email})
+ 
+    if(!isValid){
+        return res.status(400).json(errors)
+    }
+  
+      try{
+        if(user){
+            errors.email = 'Email is already taken'
+            return res.status(400).json(errors)
         }
 
         const avatar = gravatar.url(req.body.email, { 
@@ -29,13 +37,20 @@ router.post('/register',  async (req, res) => {
             avatar,
             password: req.body.password,
         })
+
+
     
         newUser.password = await bcrypt.hash(newUser.password, 8);
         await newUser.save()
         res.json(newUser);
-    }catch(err){
+    
         res.status(400).send()
-    }
+
+      } catch(err){
+          res.status(500).send()
+      }
+        
+    
 })
 
 // login User
