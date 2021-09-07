@@ -12,7 +12,7 @@ const passport = require('passport');
 const validateRegisterInput = require('../../validation/register')
 
 // register route
-router.post('/register',  async (req, res) => {
+router.post('/api/register',  async (req, res) => {
     const {errors, isValid} = validateRegisterInput(req.body)
     const user =  await User.findOne({email: req.body.email})
  
@@ -54,7 +54,7 @@ router.post('/register',  async (req, res) => {
 })
 
 // login User
-router.post('/users/login', async (req, res) => {
+router.post('/api/users/login', async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
 
@@ -78,7 +78,6 @@ router.post('/users/login', async (req, res) => {
 
 
 // return current user with valid jwt
-
 router.get('/api/users/current', passport.authenticate('jwt', {session:false}),  (req, res) => {
     const { _id, name, email, } = req.user;
     res.json({_id, name, email})  
