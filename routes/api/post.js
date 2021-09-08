@@ -1,6 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const Post = require('../../models/Post');
+const User = require('../../models/User');
 const Profile = require('../../models/Profile');
 // Load validation for post request
 const validatePostInput = require('../../validation/post');
@@ -75,20 +76,24 @@ router.get('/api/posts/:id', async (req, res) => {
 // Private Route
 
 router.delete('/api/post/:id', passport.authenticate('jwt', {session:false}), async (req, res) =>{
-    const profile = await Profile.findOne({user: req.user._id});
-    const post = await Post.findById({_id :req.params.id})
-    
-    try{
-            if(profile.user.toString() !== req.user._id){
-                return res.status(401).json({unauthorized:"Unathorized"})
-            }
-            await post.remove()
-            res.json({success: true})
-        
+   const post = await Post.findById({_id:req.params.id}) 
+  
+   const post_id = JSON.stringify(post.user);
+   const user_id = JSON.stringify(req.user._id);
+   
+  
+   try{
+       if(post_id !== user_id){
+           return res.status(401).json({unauthorized:"The user is not authorized to access this"})
+       } 
 
-    }catch(err){
-        res.status(404).send();
-    }
+       await post.remove()
+       res.json({success: true})
+   }catch(err){
+       res.status().json(err)
+   }
+
+   
 })
 
 module.exports = router;
