@@ -59,22 +59,64 @@ class Register extends Component {
         axios.post('/api/register', newUser).then(response => {
             console.log(response.data)
         }).catch(error => {
-            this.setState(error.response.data)
-            console.log(this.errors)
+           this.setState({errors: error.response.data})
+           
         })
     }
      render() {
         const {classes} = this.props;
+        const { errors } = this.state;
         return <>
             <Container className={classes.container}>
                 <Card className={classes.cardRoot}>
                     <CardContent>
                        <Typography className={classes.title} variant="h5">REGISTER</Typography>
                         <form onSubmit={this.onSubmit} className={classes.formRoot}>
-                            <TextField onChange={this.onChange} name="name" value={this.state.name} className={classes.textField} id="outlined-basic" label="Name" variant="outlined" />
-                            <TextField onChange={this.onChange} name="email" value={this.state.email} className={classes.textField} id="outlined-basic" type="email" label="Email" variant="outlined" />
-                            <TextField onChange={this.onChange} name="password" value={this.state.password} className={classes.textField} id="outlined-basic" type="password" label="Password" variant="outlined" />
-                            <TextField onChange={this.onChange} name="password2" value={this.state.password2} className={classes.textField} id="outlined-basic" type="password" label="Confirm Password" variant="outlined" />
+                            <TextField
+                            error={errors.name ? true : false}
+                            onChange={this.onChange} 
+                            name="name" 
+                            value={this.state.name} 
+                            className={classes.textField} 
+                            id="outlined-basic"
+                            label="Name" 
+                            variant="outlined"
+                            helperText={errors.name ? errors.name : ""}  />
+
+                            <TextField 
+                            error={errors.email ? true : false}
+                            onChange={this.onChange} name="email"
+                            value={this.state.email} 
+                            className={classes.textField} 
+                            id="outlined-basic" 
+                            type="email"
+                            label="Email"
+                            variant="outlined"
+                            helperText={errors.email ? errors.email : ""} />
+
+                            <TextField 
+                            error={errors.password ? true : false}
+                            onChange={this.onChange} 
+                            name="password" 
+                            value={this.state.password} 
+                            className={classes.textField} 
+                            id="outlined-basic" 
+                            type="password" 
+                            label="Password" 
+                            variant="outlined"
+                            helperText={errors.password ? errors.password : ""} />
+
+                            <TextField 
+                            error={errors.password2 ? true : false}
+                            onChange={this.onChange} 
+                            name="password2" 
+                            value={this.state.password2} 
+                            className={classes.textField} 
+                            id="outlined-basic" 
+                            type="password" 
+                            label="Confirm Password"
+                            variant="outlined"
+                            helperText={errors.password2 ? errors.password2 : ""} />
                             <Button type="submit" variant="contained">SignUp</Button>
                         </form>
                     </CardContent>

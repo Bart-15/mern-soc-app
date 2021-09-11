@@ -10,7 +10,7 @@ const passport = require('passport');
 
 // validate register;
 const validateRegisterInput = require('../../validation/register')
-
+const validateLoginInput = require('../../validation/login');
 // register route
 router.post('/api/register',  async (req, res) => {
     const {errors, isValid} = validateRegisterInput(req.body)
@@ -55,6 +55,15 @@ router.post('/api/register',  async (req, res) => {
 
 // login User
 router.post('/api/users/login', async (req, res) => {
+
+    // if the fields are empty
+    const {errors, isValid} = validateLoginInput(req.body);
+
+    if(!isValid){
+        return res.status(400).json(errors)
+    }
+
+
     const email = req.body.email;
     const password = req.body.password;
 

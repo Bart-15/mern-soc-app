@@ -11,8 +11,6 @@ const router = express.Router();
 // Create Post
 // Private
 router.post('/api/posts', passport.authenticate('jwt', {session:false}), async (req, res) => {
-   
-
     const {errors, isValid} = validatePostInput(req.body)
 
     if(!isValid) {
