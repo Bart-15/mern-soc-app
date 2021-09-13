@@ -3,6 +3,8 @@ import {Typography, Button} from '@material-ui/core'
 import {withStyles} from '@material-ui/core/styles'
 import image from '../../img/landing.jpg'
 import {Link} from 'react-router-dom'
+import  PropTypes  from 'prop-types'
+import {connect} from 'react-redux'
 const useStyles = theme => ({
     root : {
         background:`linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${image})`,
@@ -36,7 +38,13 @@ const useStyles = theme => ({
     
 
 });
+
 class LandingPage extends Component {
+    componentDidMount() {
+        if(this.props.auth.isAuthenticated){
+            this.props.history.push('/dashboard')
+        }
+    }
     render() {
         const {classes} = this.props;
         return (
@@ -56,4 +64,12 @@ class LandingPage extends Component {
     }
 }
 
-export default withStyles(useStyles)(LandingPage);
+LandingPage.propTypes = {
+    auth: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+    auth: state.auth
+})
+
+export default connect(mapStateToProps) (withStyles(useStyles)(LandingPage));

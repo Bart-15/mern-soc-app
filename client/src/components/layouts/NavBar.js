@@ -2,7 +2,11 @@
 import React,  {Component} from 'react'
 import {AppBar, Toolbar, Typography, Button} from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles';
+import { withRouter } from 'react-router';
 import {Link} from 'react-router-dom'
+import PropTypes from 'prop-types';
+import {logoutUser} from '../../actions/authActions'
+import {connect} from 'react-redux'
 
 const useStyles = theme => ({
 // NavBar Styles
@@ -35,8 +39,33 @@ const useStyles = theme => ({
 });
 
 class NavBar extends Component {
+    onLogoutClick (e) {
+       e.preventDefault();
+       this.props.logoutUser(this.props.history) 
+    }
     render() {
         const { classes } = this.props;
+        const {isAuthenticated} = this.props.auth; 
+
+        const Guest = () => {
+            return (
+                <>
+                    <Button component={Link} to="/register" className={classes.link}>SignUp</Button>
+                    <Button component={Link} to="/login" className={classes.link}>Login</Button>
+                </>
+            )
+        }
+
+        const Auth = () => {
+            return (
+                <>
+                    <Button type="button" onClick={this.onLogoutClick.bind(this)} className={classes.link}>Logout</Button>
+                </>
+            )
+        }
+
+
+
         const text = '</>'
         return (
            <div className={classes.root}>
@@ -45,13 +74,19 @@ class NavBar extends Component {
                 <Typography component={Link} to='/' variant="h6" className={classes.title}>
                     PH{text}
                 </Typography>
-                <Button component={Link} to="/register" className={classes.link}>SignUp</Button>
-                <Button component={Link} to="/login" className={classes.link}>Login</Button>
+                {isAuthenticated ? <Auth /> : <Guest />}
                 </Toolbar>
             </AppBar>
            </div> 
         )
     }
 }
+NavBar.propTypes = {
+    logoutUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+}
+const mapStateToProps = (state) => ({
+    auth: state.auth,
+})
 
-export default withStyles(useStyles)(NavBar);
+export default connect(mapStateToProps, {logoutUser}) (withStyles(useStyles)(withRouter(NavBar)));

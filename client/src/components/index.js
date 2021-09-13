@@ -1,0 +1,5 @@
+export {default as NavBar} from './layouts/NavBar'
+export {default as LandingPage} from './layouts/LandingPage'
+export {default as Footer} from './layouts/Footer'
+export {default as Login} from './auth/Login'
+export {default as Register} from './auth/Register'
