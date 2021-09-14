@@ -2,10 +2,10 @@
 import React,  {Component} from 'react'
 import {AppBar, Toolbar, Typography, Button} from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles';
-import { withRouter } from 'react-router';
 import {Link} from 'react-router-dom'
 import PropTypes from 'prop-types';
 import {logoutUser} from '../../actions/authActions'
+import { clearCurrentProfile } from '../../actions/profileActions';
 import {connect} from 'react-redux'
 
 const useStyles = theme => ({
@@ -41,7 +41,8 @@ const useStyles = theme => ({
 class NavBar extends Component {
     onLogoutClick (e) {
        e.preventDefault();
-       this.props.logoutUser(this.props.history) 
+       this.props.clearCurrentProfile()
+       this.props.logoutUser() 
     }
     render() {
         const { classes } = this.props;
@@ -83,10 +84,11 @@ class NavBar extends Component {
 }
 NavBar.propTypes = {
     logoutUser: PropTypes.func.isRequired,
+    clearCurrentProfile: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
 }
 const mapStateToProps = (state) => ({
     auth: state.auth,
 })
 
-export default connect(mapStateToProps, {logoutUser}) (withStyles(useStyles)(withRouter(NavBar)));
+export default connect(mapStateToProps, {logoutUser, clearCurrentProfile}) (withStyles(useStyles)(NavBar));

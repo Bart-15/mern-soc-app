@@ -32,7 +32,7 @@ router.get('/api/profile', passport.authenticate('jwt', {session:false}), async 
 
     try{
         if(!user){
-            errors.noprofile = 'There is no profile this user';
+            errors.noprofile = 'There is no profile for this user';
             return res.status(404).send(errors);
         }
         res.json(user);

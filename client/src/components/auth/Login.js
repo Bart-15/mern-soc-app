@@ -39,6 +39,7 @@ class Login extends Component {
             password: '',
             errors:{}
         }
+        this.inputRef = React.createRef();
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this)
     }
@@ -80,7 +81,7 @@ class Login extends Component {
                 <Card className={classes.cardRoot}>
                     <CardContent>
                        <Typography className={classes.title} variant="h5">REGISTER</Typography>
-                        <form onSubmit={this.onSubmit} className={classes.formRoot}>
+                        <form onSubmit={this.onSubmit} className={classes.formRoot} ref={this.inputRef}>
                             <TextField
                             error={errors.email ? true : false}
                             helperText={errors.email ? errors.email : ""}
@@ -104,8 +105,7 @@ class Login extends Component {
                             type="password" 
                             label="Password" 
                             variant="outlined" />
-
-                            <Button type="submit" variant="contained">SignUp</Button>
+                            <Button type="submit" variant="contained">Login</Button>
                         </form>
                     </CardContent>
                 </Card>
