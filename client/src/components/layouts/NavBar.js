@@ -59,7 +59,8 @@ class NavBar extends Component {
 
         const Auth = () => {
             return (
-                <>
+                <>  
+                    <Button type="button" component={Link} to="/dashboard" className={classes.link}>Dashboard</Button>
                     <Button type="button" onClick={this.onLogoutClick.bind(this)} className={classes.link}>Logout</Button>
                 </>
             )

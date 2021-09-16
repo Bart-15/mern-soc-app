@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {Container, Typography, Card, CardContent, Button, TextField, MenuItem} from '@material-ui/core'
-import {withRouter} from 'react-router-dom'
+import {withRouter, Link} from 'react-router-dom'
 import styled from 'styled-components';
 import {withStyles} from '@material-ui/core/styles'
-import {createNewProfile} from '../../actions/profileActions'
+import isEmpty from '../../validation/is-empty'
 import {MdArrowBack} from 'react-icons/md'
+import {createNewProfile, getCurrentProfile} from '../../actions/profileActions'
 import PropTypes from 'prop-types'
 
 // useStyles
@@ -13,7 +14,7 @@ const useStyles = theme => ({
     container : {
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
         margin:'0 auto',
     },
@@ -32,12 +33,13 @@ const useStyles = theme => ({
         alignItems: 'center',
       },
       title : {
-          textAlign: 'center',
+          color:'red',
+          fontSize:'30px'
       }
 })
 
 
-class CreateProfile extends Component {
+class EditProfile extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -65,8 +67,48 @@ class CreateProfile extends Component {
         if(nextProps.errors) {
             this.setState({ errors: nextProps.errors})
         }
+
+        if(nextProps.profile.profile) {
+           const profile = nextProps.profile.profile;
+           
+           const skillsCSV = profile.skills.join(',')
+
+        //check every field
+        profile.handle = !isEmpty(profile.handle) ? profile.handle : '' 
+        profile.company = !isEmpty(profile.company) ? profile.company : ''
+        profile.website = !isEmpty(profile.website) ? profile.website : ''  
+        profile.location = !isEmpty(profile.location) ? profile.location : ''
+        profile.status = !isEmpty(profile.status) ? profile.status : ''  
+        profile.bio = !isEmpty(profile.bio) ? profile.bio : '' 
+        profile.github = !isEmpty(profile.github) ? profile.github : '' 
+        profile.social = !isEmpty(profile.social) ? profile.social : {}
+        profile.youtube = !isEmpty(profile.social.youtube) ? profile.social.youtube : '' 
+        profile.twitter = !isEmpty(profile.social.twitter) ? profile.social.twitter : ''
+        profile.facebook = !isEmpty(profile.social.facebook) ? profile.social.facebook : ''
+        profile.linkedin = !isEmpty(profile.social.linkedin) ? profile.social.linkedin : ''
+        profile.instagram = !isEmpty(profile.social.instagram) ? profile.social.instagram : ''
+        this.setState({
+            handle: profile.handle, 
+            company: profile.company,
+            website: profile.website,
+            location: profile.location,
+            bio: profile.bio,
+            github: profile.github,
+            status: profile.status,
+            skills: skillsCSV,
+            youtube: profile.youtube,
+            facebook: profile.facebook,
+            linkedin: profile.linkedin,
+            twitter: profile.twitter,
+            instagram: profile.instagram,
+
+        })
+        }
     }
 
+    componentDidMount () {
+        this.props.getCurrentProfile();
+    }
 
     onChange (e) {
         this.setState({[e.target.name] : e.target.value})
@@ -124,20 +166,19 @@ class CreateProfile extends Component {
         const Header = styled.div`
             display:flex;
             flex-wrap:wrap;
-            flex-direction:column;
-            justify-content:center;
+            flex-direction:row;
+            justify-content:flex-start;
             align-items:center;
+            margin:10px;
         `
         return (
             <Container className={classes.container}>
                 <Header>
-                    <MdArrowBack />
-                    <Typography variant="h4">Create Your Profile</Typography>
-                    <Typography variant="subtitle1">Let's get some information about yourself to make your profile stand out.</Typography>
+                    <Button component={Link} to="/dashboard" className={classes.title} variant="h5"><MdArrowBack /></Button>
+                    <Typography variant="h4">Edit Profile</Typography>
                 </Header>
                 <Card className={classes.cardRoot}>
                     <CardContent>
-                       <Typography className={classes.title} variant="h5">REGISTER</Typography>
                         <form onSubmit={this.onSubmit} className={classes.formRoot}>
 
                             <TextField
@@ -301,7 +342,7 @@ class CreateProfile extends Component {
                             variant="outlined" 
                             />
 
-                            <Button type="submit" variant="contained">Submit</Button>
+                            <Button type="submit" variant="contained">Edit Profile</Button>
                         </form>
                     </CardContent>
                 </Card>
@@ -311,7 +352,9 @@ class CreateProfile extends Component {
 }
 
 
-CreateProfile.propTypes = {
+EditProfile.propTypes = {
+    getCurrentProfile: PropTypes.func.isRequired,
+    createNewProfile: PropTypes.func.isRequired,
     profile: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 }
@@ -320,4 +363,4 @@ const mapStateToProps = state => ({
     errors: state.errors
 })
 
-export default connect(mapStateToProps, {createNewProfile}) (withStyles(useStyles)(withRouter(CreateProfile)));
+export default connect(mapStateToProps, {createNewProfile, getCurrentProfile}) (withStyles(useStyles)(withRouter(EditProfile)));
