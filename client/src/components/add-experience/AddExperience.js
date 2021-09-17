@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import {withStyles} from '@material-ui/core/styles'
-import { createNewEduc } from '../../actions/profileActions'
+import { createNewExp } from '../../actions/profileActions'
 // styles
 
 const useStyles = theme => ({
@@ -24,13 +24,13 @@ const useStyles = theme => ({
 })
 
 
-class AddEducation extends Component {
+class AddExperience extends Component {
     constructor() {
         super() 
         this.state = {
-            school: '',
-            degree: '',
-            fieldofstudy:'',
+            title: '',
+            company: '',
+            location:'',
             from:'',
             to:'',
             description:'',
@@ -47,16 +47,16 @@ class AddEducation extends Component {
     onSubmit(e) {
         e.preventDefault()
 
-        const educData = {
-            school: this.state.school,
-            degree: this.state.degree,
-            fieldofstudy: this.state.fieldofstudy,
+        const expData = {
+            title: this.state.title,
+            company: this.state.company,
+            location: this.state.location,
             from: this.state.from,
             to: this.state.to,
             description: this.state.description,
         }
 
-        this.props.createNewEduc(educData, this.props.history)
+        this.props.createNewExp(expData, this.props.history)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -85,28 +85,28 @@ class AddEducation extends Component {
                             <form onSubmit={this.onSubmit} className={classes.formRoot}>
                                 
                                 <TextField 
-                                error={errors.school ? true :  false}
-                                helperText={errors.school ? errors.school : ""}
-                                name="school" 
-                                value={this.state.school} 
+                                error={errors.title ? true :  false}
+                                helperText={errors.title ? errors.title : ""}
+                                name="title" 
+                                value={this.state.title} 
                                 onChange={this.onChange} 
-                                label="Name of your School" 
+                                label="Job Tite" 
                                 variant="outlined"/>
 
                                 <TextField 
-                                name="degree" 
-                                error={errors.degree ? true :  false}
-                                helperText={errors.degree ? errors.degree : ""}
-                                value={this.state.degree} 
+                                name="company" 
+                                error={errors.company ? true :  false}
+                                helperText={errors.company ? errors.company : ""}
+                                value={this.state.company} 
                                 onChange={this.onChange} 
-                                label="Degree" 
+                                label="Company" 
                                 variant="outlined"/>   
                                 
                                 <TextField 
-                                name="fieldofstudy" 
-                                value={this.state.fieldofstudy} 
+                                name="location" 
+                                value={this.state.location} 
                                 onChange={this.onChange} 
-                                label="Fieldofstudy" 
+                                label="Location" 
                                 variant="outlined"/>   
                                 
                                 <TextField 
@@ -130,7 +130,7 @@ class AddEducation extends Component {
                                     variant="outlined"/>   
                                <div style={{display: "flex", alignItems: "center"}}>
                                    <input type="checkbox" value={this.state.current} checked={this.state.current} name="current" onChange={this.onCheck}/>
-                                   <Typography variant="subtitle1">Current School</Typography>
+                                   <Typography variant="subtitle1">Current Job</Typography>
                                </div>
                                
                                <TextField 
@@ -157,8 +157,8 @@ class AddEducation extends Component {
 }
 
 
-AddEducation.propTypes = {
-    createNewEduc: PropTypes.func.isRequired,
+AddExperience.propTypes = {
+    createNewExp: PropTypes.func.isRequired,
     profile: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 }
@@ -168,4 +168,4 @@ const mapStateToProps = (state) => ({
     profile: state.profile
 })
 
-export default connect(mapStateToProps, {createNewEduc}) ((withStyles(useStyles))((withRouter)(AddEducation)));
+export default connect(mapStateToProps, {createNewExp}) ((withStyles(useStyles))((withRouter)(AddExperience)));

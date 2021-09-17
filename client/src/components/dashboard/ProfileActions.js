@@ -11,7 +11,7 @@ const ProfileActions = () => {
     return (
         <div className={classes.root}>
             <Button className={classes.action} component={Link} to="/edit-profile"><AiFillEdit  className={classes.link}/>Edit Profile</Button>
-            <Button className={classes.action} component={Link} to="/create-experience"><FaUserAlt className={classes.link} />Add Experience</Button>
+            <Button className={classes.action} component={Link} to="/add-experience"><FaUserAlt className={classes.link} />Add Experience</Button>
             <Button className={classes.action} component={Link} to="/add-education"><BiBookAlt className={classes.link} />Add Education</Button>
         </div>
     )

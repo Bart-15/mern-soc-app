@@ -13,7 +13,9 @@ import setAuthToken from './utils/setAuthToken';
 import { logoutUser } from './actions/authActions';
 import {clearCurrentProfile} from './actions/profileActions'
 import PrivateRoute from './components/common/PrivateRoute'
-import {Login, Register, NavBar, LandingPage, Footer, Dashboard, CreateProfile, EditProfile, AddEducation} from './components'
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import {Login, Register, NavBar, LandingPage, Footer, Dashboard, CreateProfile, EditProfile, AddExperience, AddEducation} from './components'
 import './App.css';
 
 
@@ -41,6 +43,7 @@ class App extends Component {
   render() {
     return(
       <>
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Provider store={store}>
           <Router>
             <NavBar />
@@ -52,12 +55,14 @@ class App extends Component {
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
                 <PrivateRoute exact path="/create-profile" component={CreateProfile} />
                 <PrivateRoute exact path="/edit-profile" component={EditProfile} />
+                <PrivateRoute exact path="/add-experience" component={AddExperience} />
                 <PrivateRoute exact path="/add-education" component={AddEducation} />
               </Switch>
             </div>
             <Footer />
           </Router>
-      </Provider> 
+      </Provider>
+      </MuiPickersUtilsProvider>
     </>
     )
   }
