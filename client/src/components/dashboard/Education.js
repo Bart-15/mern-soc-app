@@ -2,33 +2,33 @@ import React, { Component } from 'react'
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import {deleteExp} from '../../actions/profileActions'
+import {deleteEducation} from '../../actions/profileActions'
 import {Table, TableContainer, TableHead, TableRow, TableBody, TableCell, Button} from '@material-ui/core'
 import Moment from 'react-moment'
-class Experience extends Component {
+class Education extends Component {
 
 
     onDelete(id) {
-        this.props.deleteExp(id, this.props.history)
+        this.props.deleteEducation(id, this.props.history)
     }
     render() {
-        const experience = this.props.experience;
+        const education = this.props.education;
         return (
             <div>
                 <TableContainer>
                     <Table>
                         <TableHead>
-                            <TableCell>Company</TableCell>
-                            <TableCell>Job Title</TableCell>
+                            <TableCell>School</TableCell>
+                            <TableCell>Degree</TableCell>
                             <TableCell>Years</TableCell>
                         </TableHead>
                     <TableBody>
                             {
-                                experience.map((item)=> {
+                                education.map((item)=> {
                                     return <>
                                     <TableRow key={parseInt(item._id)}>
-                                        <TableCell>{item.company}</TableCell>
-                                        <TableCell>{item.title}</TableCell>
+                                        <TableCell>{item.school}</TableCell>
+                                        <TableCell>{item.degree}</TableCell>
                                         <TableCell>
                                             <Moment format="YYYY/MM/DD">
                                                 {item.from}    
@@ -52,8 +52,8 @@ class Experience extends Component {
     }
 }
 
-Experience.propTypes = {
-    deleteExp: PropTypes.func.isRequired
+Education.propTypes = {
+    deleteEducation: PropTypes.func.isRequired
 }
 
-export default connect(null, {deleteExp}) ((withRouter)(Experience))
+export default connect(null, {deleteEducation}) ((withRouter)(Education))

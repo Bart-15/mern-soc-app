@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import {GET_PROFILE, PROFILE_LOADING, CLEAR_CURRENT_PROFILE, GET_ERRORS, SET_CURRENT_USER} from './types'
+import {GET_PROFILE, PROFILE_LOADING, CLEAR_CURRENT_PROFILE, GET_ERRORS, SET_CURRENT_USER, GET_PROFILES} from './types'
 
 // getcurrent profile
 export const getCurrentProfile = () => dispatch => {
@@ -46,6 +46,7 @@ export const createNewExp = (expData, history) => dispatch =>  {
             type:GET_ERRORS,
             payload: err.response.data
         }))
+
 }
 
 export const createNewEduc = (educData, history) => dispatch => {
@@ -57,15 +58,56 @@ export const createNewEduc = (educData, history) => dispatch => {
         }))
 }
 
-export const deleteEducation = (id, history) => dispatch => {
+export const deleteExp = (id, history) => dispatch => {
    axios.delete(`/api/profile/experience/${id}`)
-   .then(res => history.push('/dashboard'))
+   .then(res => dispatch({
+       type:GET_PROFILE,
+       payload:res.data
+   }))
    .catch(err => dispatch({
        type:GET_ERRORS,
        payload:err.response.data
    }))
 }
 
+
+export const getProfiles = () => dispatch => {
+    axios.get('/api/all')
+        .then(res => dispatch({
+            type:GET_PROFILES,
+            payload:res.data
+        }))
+        .catch(err => dispatch({
+            type:GET_ERRORS,
+            payload:err.response.data
+        }))
+}
+
+export const deleteEducation = (id) => dispatch => {
+    axios.delete(`/api/profile/education/${id}`)
+        .then(res => dispatch({
+            type:GET_PROFILE,
+            payload:res.data
+        }))
+        .catch(err => dispatch({
+            type:GET_ERRORS,
+            payload:err.response.data
+        }))
+}
+
+// view profile thru handle
+export const getHandleProfile = (handle) =>  dispatch => {
+    axios.get(`/api/profile/handle/${handle}`)
+        .then(res => {
+            dispatch({
+                type:GET_PROFILE,
+                payload:res.data
+            })
+        }).catch(err => dispatch({
+            type:GET_ERRORS,
+            payload:err.response.data
+        }))
+} 
 
 export const deleteAccount = () => dispatch => {
    if(window.confirm('Are you sure you want to delete this account?')){

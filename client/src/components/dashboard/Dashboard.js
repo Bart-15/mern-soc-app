@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import{connect} from 'react-redux'
-import {Experience} from '../index'
+import {Experience, Education} from '../index'
 import {getCurrentProfile, deleteAccount} from '../../actions/profileActions'
 import {Link} from 'react-router-dom'
 import styled from 'styled-components'
@@ -45,8 +45,11 @@ class Dashboard extends Component {
                 content = (
                     <Container>
                         <Typography variant="h5">Welcome <Typography component={Link} to={`/profile/${profile.handle}`}variant="subtitle1">{profile.handle}</Typography></Typography>
-                        <ProfileActions />
+                        <ProfileActions /> 
+                        <Typography variant="h5">Experience </Typography> 
                         <Experience experience={profile.experience} />
+                        <Typography variant="h5">Education </Typography> 
+                        <Education education={profile.education} />
                         <br />
                         <Button onClick={this.onDelete} color="secondary" variant="contained">Delete Account</Button>
                         <br />

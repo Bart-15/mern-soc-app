@@ -78,7 +78,7 @@ class AddEducation extends Component {
         const {errors} = this.state;
         return (
             <Container className={classes.container}>
-                <Typography variant="h5">Add Experience</Typography>
+                <Typography variant="h5">Add Education</Typography>
                 <div className={classes.root}>
                     <Card className={classes.card}>
                         <CardContent>
@@ -162,6 +162,8 @@ AddEducation.propTypes = {
     profile: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 }
+
+
 
 const mapStateToProps = (state) => ({
     errors: state.errors,

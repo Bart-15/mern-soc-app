@@ -15,7 +15,7 @@ import {clearCurrentProfile} from './actions/profileActions'
 import PrivateRoute from './components/common/PrivateRoute'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import {Login, Register, NavBar, LandingPage, Footer, Dashboard, CreateProfile, EditProfile, AddExperience, AddEducation} from './components'
+import {Login, Register, NavBar, LandingPage, Footer, Dashboard, CreateProfile, EditProfile, AddExperience, AddEducation, Profiles, SingleProfile} from './components'
 import './App.css';
 
 
@@ -50,7 +50,9 @@ class App extends Component {
             <Route exact path="/" component={LandingPage} />
             <div>
               <Route exact path="/login" component={Login} />
+              <Route exact path="/profiles" component={Profiles} />
               <Route exact path="/register" component={Register} />
+              <Route exact path="/profile/:handle" component={SingleProfile} />
               <Switch>
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
                 <PrivateRoute exact path="/create-profile" component={CreateProfile} />
