@@ -13,8 +13,6 @@ import setAuthToken from './utils/setAuthToken';
 import { logoutUser } from './actions/authActions';
 import {clearCurrentProfile} from './actions/profileActions'
 import PrivateRoute from './components/common/PrivateRoute'
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
 import {Login, Register, NavBar, LandingPage, Footer, Dashboard, CreateProfile, EditProfile, AddExperience, AddEducation, Profiles, SingleProfile} from './components'
 import './App.css';
 
@@ -43,7 +41,6 @@ class App extends Component {
   render() {
     return(
       <>
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Provider store={store}>
           <Router>
             <NavBar />
@@ -64,7 +61,6 @@ class App extends Component {
             <Footer />
           </Router>
       </Provider>
-      </MuiPickersUtilsProvider>
     </>
     )
   }
