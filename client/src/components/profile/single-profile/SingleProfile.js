@@ -37,7 +37,7 @@ class SingleProfile extends Component {
                             <ProfileCredentials profile={profile} />    
                         </Grid>
                         <Grid item xs={12} lg={12}>
-                            <ProfileGithub />
+                            {profile.github ? <ProfileGithub username={profile.github}/> : null}
                         </Grid>
                     </Grid>
                 </Grid>

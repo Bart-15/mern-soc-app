@@ -28,7 +28,7 @@ router.post('/api/posts', passport.authenticate('jwt', {session:false}), async (
        const post =  await new Post(newPost).save();
        res.status(200).json(post)
     }catch(e) {
-        res.status(400).send();
+        res.status(400).json();
     }
 
 })
