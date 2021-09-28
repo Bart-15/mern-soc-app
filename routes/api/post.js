@@ -118,7 +118,7 @@ router.post('/api/posts/unlike/:id', passport.authenticate('jwt', {session:false
                 }
 
                 // remove like
-                const removeLike = post.likes.map(like => like.user.toString()).indexOf(req.user._id)
+                const removeLike = post.likes.filter(like => like.user !== req.user._id)
                 post.likes.splice(removeLike, 1)
                 post.save().then(post =>  res.json(post))
             })

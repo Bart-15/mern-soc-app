@@ -61,6 +61,7 @@ class NavBar extends Component {
             return (
                 <>  
                     <Button type="button" component={Link} to="/dashboard" className={classes.link}>Dashboard</Button>
+                    <Button type="button" component={Link} to="/post-feed" className={classes.link}>News Feed</Button>
                     <Button type="button" onClick={this.onLogoutClick.bind(this)} className={classes.link}>Logout</Button>
                 </>
             )

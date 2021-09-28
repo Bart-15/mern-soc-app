@@ -11,14 +11,16 @@ class PostFeed extends Component {
 
     render() {
         const {posts, loading} = this.props.post;
+        const {user} = this.props.auth;
         return <>
             <PostForm />
-            <PostContainer posts={posts} loading={loading} />
+            <PostContainer posts={posts} loading={loading} user={user}/>
         </>
     }
 }
 const mapStateToProps = (state) => ({
-    post: state.post
+    post: state.post,
+    auth:state.auth
 })
 export default connect(mapStateToProps, {fetchAllPost})(PostFeed)
 

@@ -13,7 +13,7 @@ import setAuthToken from './utils/setAuthToken';
 import { logoutUser } from './actions/authActions';
 import {clearCurrentProfile} from './actions/profileActions'
 import PrivateRoute from './components/common/PrivateRoute'
-import {Login, Register, NavBar, LandingPage, Footer, Dashboard, CreateProfile, EditProfile, AddExperience, AddEducation, Profiles, SingleProfile, PostFeed} from './components'
+import {Login, Register, NavBar, LandingPage, Footer, Dashboard, CreateProfile, EditProfile, AddExperience, AddEducation, Profiles, SingleProfile, PostFeed, SinglePost} from './components'
 import './App.css';
 
 
@@ -57,6 +57,7 @@ class App extends Component {
                 <PrivateRoute exact path="/add-experience" component={AddExperience} />
                 <PrivateRoute exact path="/add-education" component={AddEducation} />
                 <PrivateRoute exact path="/post-feed" component={PostFeed} />
+                <PrivateRoute exact path="/single-post/:id" component={SinglePost} />
               </Switch>
             </div>
             <Footer />

@@ -1,21 +1,22 @@
 import React, { Component } from 'react'
-import {Grid, Typography, Card, CardContent} from '@material-ui/core'
+import {Grid, Typography, Card, CardContent, Button} from '@material-ui/core'
+import {Link} from 'react-router-dom'
 import {AiFillLike, AiFillDislike} from 'react-icons/ai'
-import{withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {MdInsertComment} from 'react-icons/md'
-import {likePost} from '../../actions/postActions'
+import {likePost, unlikePost, deletePost} from '../../actions/postActions'
 import {withStyles} from '@material-ui/core/styles'
 
 const useStyles = theme => ({
     cardRoot : {
+        color:'#333',
         margin:'4%',
-        transition: "0.3s",
-        boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
-        "&:hover": {
-        boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"
-        }
+        background:' rgba( 13, 3, 3, 0.25 )',
+        boxShadow: '0 8px 32px 0 rgba( 31, 38, 135, 0.37 )',
+        backdropFilter: 'blur( 5px )',
+        borderRadius: '10px',
+        border: '1px solid rgba( 255, 255, 255, 0.18 )',
     },
     name: {
         marginLeft:'4px'
@@ -45,12 +46,30 @@ const useStyles = theme => ({
 
 class PostItem extends Component {
 
-    onLike(postId, userId) {
-        this.props.likePost(postId, userId, this.props.history)
+    onLike(postId) {
+        this.props.likePost(postId)
+    }
+
+    onUnlike(postId) {
+        this.props.unlikePost(postId)
+    }
+
+    findUserLike(likes) {
+        const user = this.props.user;
+        if(likes.filter(like => like.user === user._id).length > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    onDeletePost(postId){
+        this.props.deletePost(postId);
     }
     render() {
         const posts = this.props.posts;
         const {classes} = this.props;
+        const authUser = this.props.user;
         return (
             <Grid container>
                 <Grid item xs={12} lg={12}>
@@ -67,10 +86,29 @@ class PostItem extends Component {
                                        <Grid item xs={12} lg={6}>
                                         <Typography variant="h6">{post.text}</Typography>
                                        </Grid>
-                                        <div className={classes.footer}> 
-                                            <AiFillLike className={classes.icons} onClick={this.onLike.bind(this, post._id, post.user)}/>
-                                            <AiFillDislike  className={classes.icons}/>
-                                            <MdInsertComment className={classes.icons} />
+                                        <div className={classes.footer}>
+                                            <Button color={this.findUserLike(post.likes) ? 'primary' : ''}>
+                                            <AiFillLike 
+                                            className={classes.icons} 
+                                            onClick={this.onLike.bind(this, post._id)
+                                            }/>
+                                            <Typography variant="contained">{post.likes.length > 0 ? post.likes.length : ''}</Typography>
+                                            </Button> 
+                                            <Button
+                                            onClick={this.onUnlike.bind(this, post._id)}>
+                                              <AiFillDislike  className={classes.icons}/>
+                                            </Button>
+
+                                            <Button component={Link} to={`/single-post/${post._id}`}>
+                                                <MdInsertComment className={classes.icons} />
+                                            </Button>
+                                            {
+                                                authUser._id === post.user ? 
+                                            <Button onClick={this.onDeletePost.bind(this, post._id)} color="secondary" variant="contained">
+                                                Delete Post
+                                            </Button>
+                                            : null
+                                            }
                                         </div>
                                     </Grid>
                                     </CardContent>
@@ -85,7 +123,9 @@ class PostItem extends Component {
 }
 
 PostItem.propTypes = {
-    likePost: PropTypes.func.isRequired
+    likePost: PropTypes.func.isRequired,
+    deletePost: PropTypes.func.isRequired,
+    unlikePost: PropTypes.func.isRequired,
 }
 
-export default connect(null, {likePost})(withStyles(useStyles)((withRouter)(PostItem)));
+export default connect(null, {likePost, unlikePost, deletePost})(withStyles(useStyles)(PostItem));
