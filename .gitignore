@@ -1,7 +1,5 @@
 # 
 
 node_modules
-config/keys_dev.js
-config/prod_dev.js
 package-lock.json
 build
