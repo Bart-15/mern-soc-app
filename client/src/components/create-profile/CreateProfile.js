@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import {Container, Typography, Card, CardContent, Button, TextField, MenuItem} from '@material-ui/core'
+import {Container, Typography, Card, CardContent, Button, TextField} from '@material-ui/core'
 import {withRouter} from 'react-router-dom'
 import styled from 'styled-components';
 import {withStyles} from '@material-ui/core/styles'
 import {createNewProfile} from '../../actions/profileActions'
-import {MdArrowBack} from 'react-icons/md'
 import PropTypes from 'prop-types'
 
 // useStyles
@@ -18,7 +17,7 @@ const useStyles = theme => ({
         margin:'0 auto',
     },
     cardRoot: {
-        width:'800px',
+        width:'auto',
         margin:'30px 0 30px 0'
     },
     formRoot: {
@@ -30,10 +29,17 @@ const useStyles = theme => ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        [theme.breakpoints.down('sm')] : {
+            '& > *' : {
+                width:'30ch'
+            }
+        }
       },
       title : {
           textAlign: 'center',
-      }
+      },
+
+     
 })
 
 
@@ -100,24 +106,8 @@ class CreateProfile extends Component {
 
         const {classes} = this.props;
         const {errors} =  this.state;
-        // options   
-        const options = [
-            {
-                id:1,
-                value:'Jr developer'
-            },
-
-            {
-                id:2,
-                value:'Mid developer'
-            },
-
-            {
-                id:3,
-                value:'Senior developer'
-            }
-        ] 
-
+   
+       
         
         
         // Header
@@ -130,14 +120,13 @@ class CreateProfile extends Component {
         `
         return (
             <Container className={classes.container}>
+                <br />
                 <Header>
-                    <MdArrowBack />
                     <Typography variant="h4">Create Your Profile</Typography>
                     <Typography variant="subtitle1">Let's get some information about yourself to make your profile stand out.</Typography>
                 </Header>
                 <Card className={classes.cardRoot}>
                     <CardContent>
-                       <Typography className={classes.title} variant="h5">REGISTER</Typography>
                         <form onSubmit={this.onSubmit} className={classes.formRoot}>
 
                             <TextField
@@ -201,8 +190,7 @@ class CreateProfile extends Component {
                             <TextField
                             id="outlined-basic"
                             error={errors.status ? true : false}
-                            helperText={errors.status ? errors.status : ""}
-                            select 
+                            helperText={errors.status ? errors.status : "Your Job Title"} 
                             name="status"
                             onChange={this.onChange}
                             value={this.state.status}
@@ -210,13 +198,7 @@ class CreateProfile extends Component {
                             label="Status" 
                             variant="outlined" 
                             >
-                            {
-                                options.map((option) => (
-                                    <MenuItem key={option.id} value={option.value} >
-                                        {option.value}
-                                    </MenuItem>
-                                ))
-                            }
+                           
                             </TextField>
 
                             <TextField
@@ -301,7 +283,7 @@ class CreateProfile extends Component {
                             variant="outlined" 
                             />
 
-                            <Button type="submit" variant="contained">Submit</Button>
+                            <Button color="primary" type="submit" variant="contained">Submit</Button>
                         </form>
                     </CardContent>
                 </Card>

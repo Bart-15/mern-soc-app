@@ -37,6 +37,7 @@ class Profiles extends Component {
             <Container>
                 <br />
                 {profileItems}
+                <br />
             </Container>
         )
     }

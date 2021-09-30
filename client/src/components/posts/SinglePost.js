@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {Container, Button, Typography} from '@material-ui/core'
+import {Container, Button} from '@material-ui/core'
 import Spinner from '../../components/common/Spinner'
 import PropTypes from 'prop-types'
 import {getPost} from '../../actions/postActions'

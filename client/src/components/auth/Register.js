@@ -15,7 +15,7 @@ const useStyles = theme => ({
         alignItems : 'center',
     },
     cardRoot: {
-        width: 500,
+        width: 'auto',
         margin:'30px 0 30px 0'
     },
     formRoot: {
@@ -27,6 +27,11 @@ const useStyles = theme => ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        [theme.breakpoints.down('sm')] : {
+            '& > *' : {
+                width:'30ch'
+            }
+        }
       },
       title : {
           textAlign: 'center',
@@ -130,7 +135,7 @@ class Register extends Component {
                             label="Confirm Password"
                             variant="outlined"
                             helperText={errors.password2 ? errors.password2 : ""} />
-                            <Button type="submit" variant="contained">SignUp</Button>
+                            <Button variant="contained" type="submit" color="primary">SignUp</Button>
                         </form>
                     </CardContent>
                 </Card>

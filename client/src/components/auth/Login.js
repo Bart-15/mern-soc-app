@@ -13,18 +13,23 @@ const useStyles = theme => ({
         alignItems : 'center',
     },
     cardRoot: {
-        width: 500,
+        width:'auto',
         margin:'30px 0 30px 0'
     },
     formRoot: {
         '& > *': {
-          margin: theme.spacing(1),
-          width: '45ch',
+            margin: theme.spacing(1),
+            width: '45ch',
         },
         display:'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        [theme.breakpoints.down('sm')] : {
+            '& > *' : {
+                width:'30ch'
+            }
+        }
       },
       title : {
           textAlign: 'center',
@@ -80,7 +85,7 @@ class Login extends Component {
             <Container className={classes.container}>
                 <Card className={classes.cardRoot}>
                     <CardContent>
-                       <Typography className={classes.title} variant="h5">REGISTER</Typography>
+                       <Typography className={classes.title} variant="h5">SIGN UP</Typography>
                         <form onSubmit={this.onSubmit} className={classes.formRoot} ref={this.inputRef}>
                             <TextField
                             error={errors.email ? true : false}
@@ -105,7 +110,7 @@ class Login extends Component {
                             type="password" 
                             label="Password" 
                             variant="outlined" />
-                            <Button type="submit" variant="contained">Login</Button>
+                            <Button variant="contained" color="primary" type="submit">Login</Button>
                         </form>
                     </CardContent>
                 </Card>

@@ -11,6 +11,10 @@ const passport = require('passport');
 // validate register;
 const validateRegisterInput = require('../../validation/register')
 const validateLoginInput = require('../../validation/login');
+
+const {welcomeEmail} = require('../../email/account')
+
+
 // register route
 router.post('/api/register',  async (req, res) => {
     const {errors, isValid} = validateRegisterInput(req.body)
@@ -42,6 +46,7 @@ router.post('/api/register',  async (req, res) => {
     
         newUser.password = await bcrypt.hash(newUser.password, 8);
         await newUser.save()
+        welcomeEmail(newUser.name, newUser.email);
         res.json(newUser);
     
         res.status(400).send()
@@ -91,5 +96,7 @@ router.get('/api/users/current', passport.authenticate('jwt', {session:false}), 
     const { _id, name, email, } = req.user;
     res.json({_id, name, email})  
 })
+
+
 
 module.exports = router;

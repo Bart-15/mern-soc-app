@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 require('./db/db')
-
+const path = require('path');
 
 // Routes
 const users = require('./routes/api/users');
@@ -31,6 +31,17 @@ require('./config/passport')(passport);
 app.use(users);
 app.use(post);
 app.use(profile)
+
+// server static assets if in production
+if(process.env.NODE_ENV == 'production') {
+    // Set static folder
+    app.use(express.static('client/build'))
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+    })
+}
+
+
 
 
 app.listen(port , ()=> {

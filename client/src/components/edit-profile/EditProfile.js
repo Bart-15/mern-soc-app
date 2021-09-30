@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import {Container, Typography, Card, CardContent, Button, TextField, MenuItem} from '@material-ui/core'
+import {Container, Typography, Card, CardContent, Button, TextField} from '@material-ui/core'
 import {withRouter, Link} from 'react-router-dom'
 import styled from 'styled-components';
 import {withStyles} from '@material-ui/core/styles'
@@ -19,7 +19,7 @@ const useStyles = theme => ({
         margin:'0 auto',
     },
     cardRoot: {
-        width:'800px',
+        width:'auto',
         margin:'30px 0 30px 0'
     },
     formRoot: {
@@ -31,6 +31,13 @@ const useStyles = theme => ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        [theme.breakpoints.down('sm')] : {
+            '& > *': {
+                width:'30ch'
+            }
+         },
+ 
+        
       },
       title : {
           color:'red',
@@ -142,23 +149,6 @@ class EditProfile extends Component {
 
         const {classes} = this.props;
         const {errors} =  this.state;
-        // options   
-        const options = [
-            {
-                id:1,
-                value:'Jr developer'
-            },
-
-            {
-                id:2,
-                value:'Mid developer'
-            },
-
-            {
-                id:3,
-                value:'Senior developer'
-            }
-        ] 
 
         
         
@@ -242,23 +232,16 @@ class EditProfile extends Component {
                             <TextField
                             id="outlined-basic"
                             error={errors.status ? true : false}
-                            helperText={errors.status ? errors.status : ""}
-                            select 
+                            helperText={errors.status ? errors.status : "You Job Title"} 
                             name="status"
                             onChange={this.onChange}
                             value={this.state.status}
                             type="text" 
                             label="Status" 
                             variant="outlined" 
-                            >
-                            {
-                                options.map((option) => (
-                                    <MenuItem key={option.id} value={option.value} >
-                                        {option.value}
-                                    </MenuItem>
-                                ))
-                            }
-                            </TextField>
+                            />
+                        
+
 
                             <TextField
                             id="outlined-basic" 
@@ -342,7 +325,7 @@ class EditProfile extends Component {
                             variant="outlined" 
                             />
 
-                            <Button type="submit" variant="contained">Edit Profile</Button>
+                            <Button color="primary" type="submit" variant="contained">Edit Profile</Button>
                         </form>
                     </CardContent>
                 </Card>

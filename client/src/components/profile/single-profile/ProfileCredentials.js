@@ -85,8 +85,8 @@ class ProfileCredentials extends Component {
         return (
             <Container>
                 <Grid container spacing={3}>
-                    {<Education />}
-                    {<Experience />}
+                    {profile.education.length  ? <Education /> :  null}
+                    {profile.experience.length  ? <Experience /> : null}
                 </Grid>
             </Container>
         )

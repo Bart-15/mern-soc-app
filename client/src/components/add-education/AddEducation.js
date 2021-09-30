@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import {withStyles} from '@material-ui/core/styles'
 import { createNewEduc } from '../../actions/profileActions'
-// styles
+import {Link} from 'react-router-dom'
 
 const useStyles = theme => ({
     container: {
@@ -78,6 +78,8 @@ class AddEducation extends Component {
         const {errors} = this.state;
         return (
             <Container className={classes.container}>
+                <br />
+                <Button component={Link} to="/dashboard" color="secondary" variant="contained">Go back</Button>
                 <Typography variant="h5">Add Education</Typography>
                 <div className={classes.root}>
                     <Card className={classes.card}>
@@ -141,7 +143,7 @@ class AddEducation extends Component {
                                    rows={2}
                                    variant="outlined"
                                    label="Description"/> 
-                               <Button type="submit" variant="contained"> Submit</Button>
+                               <Button color="primary" type="submit" variant="contained"> Submit</Button>
                                {/* <Checkbox
                                     name="current"
                                     checked={this.state.current}
@@ -151,6 +153,7 @@ class AddEducation extends Component {
                         </CardContent>
                     </Card>
                 </div>
+                <br />
             </Container>
         )
     }

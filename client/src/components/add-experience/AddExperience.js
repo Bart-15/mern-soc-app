@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import {withStyles} from '@material-ui/core/styles'
+import {Link} from 'react-router-dom'
 import { createNewExp } from '../../actions/profileActions'
 // styles
 
@@ -78,6 +79,8 @@ class AddExperience extends Component {
         const {errors} = this.state;
         return (
             <Container className={classes.container}>
+                <br />
+                <Button to="dashboard" variant="contained" color="secondary" component={Link}> Go Back</Button>
                 <Typography variant="h5">Add Experience</Typography>
                 <div className={classes.root}>
                     <Card className={classes.card}>
@@ -90,7 +93,7 @@ class AddExperience extends Component {
                                 name="title" 
                                 value={this.state.title} 
                                 onChange={this.onChange} 
-                                label="Job Tite" 
+                                label="Job Title" 
                                 variant="outlined"/>
 
                                 <TextField 
@@ -141,7 +144,7 @@ class AddExperience extends Component {
                                    rows={2}
                                    variant="outlined"
                                    label="Description"/> 
-                               <Button type="submit" variant="contained"> Submit</Button>
+                               <Button color="primary" type="submit" variant="contained"> Submit</Button>
                                {/* <Checkbox
                                     name="current"
                                     checked={this.state.current}
@@ -151,6 +154,7 @@ class AddExperience extends Component {
                         </CardContent>
                     </Card>
                 </div>
+                <br />
             </Container>
         )
     }

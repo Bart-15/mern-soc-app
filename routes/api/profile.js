@@ -3,11 +3,13 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const passport = require('passport');
 
+
+
 // validation config
 const validateProfileInput = require('../../validation/profile');
 const validateExperienceInput = require('../../validation/experience');
 const validateEducationInput = require('../../validation/education');
-
+const {deleteAccountEmail} =  require('../../email/account')
 
 
 
@@ -279,6 +281,7 @@ router.delete('/api/profile/education/:edu_id', passport.authenticate('jwt', {se
 router.delete('/api/profile', passport.authenticate('jwt', {session:false}), async (req, res) => {
      await Profile.findOneAndRemove({user: req.user._id});
      await User.findOneAndRemove({_id: req.user._id});
+     deleteAccountEmail(req.user.email)
      res.json({success: true})
 })
 module.exports = router;

@@ -47,31 +47,45 @@ class ProfileGithub extends Component {
     render() {
         const {repos} = this.state;
         const {classes} = this.props;
-        console.log(repos)
+
+        let githubContainer;
+
+        if(!repos.length) {
+            githubContainer = null;
+        } else {
+            githubContainer = (
+                <div>
+                    <Typography variant="h5" align="center">Github Repo</Typography>
+                    {
+                        repos.map((item, idx) => {
+                            return (
+                                <Card className={classes.cardRoot} key={idx}>
+                                    <CardContent>
+                                        <div className={classes.Container}>
+                                        <Typography className={classes.title} variant="subtitle1">{item.name}</Typography>
+                                        <Typography variant="caption">Fork: {item.forks_count}</Typography>
+                                        <Typography variant="caption">Stars: {item.stargazers_count}</Typography>
+                                        <Typography variant="caption">Watcher: {item.watchers}</Typography>
+                                        </div>
+                                        <Button  variant="contained" color="primary">
+                                            <a target="_blank" rel="noopener noreferrer"className={classes.btn} href={item.html_url}>{item.name}</a>
+                                        </Button>
+                                    </CardContent>
+                                </Card>
+                            )
+                        })
+                    }
+                </div>
+            )
+        }
+
+
         return (
                 <Container>
                     <Grid item xs={12} lg={6}>
-                        <Typography variant="h5" align="center">Github Repo</Typography>
-                        {
-                            repos.map((item, idx) => {
-                                return (
-                                    <Card className={classes.cardRoot} key={idx}>
-                                        <CardContent>
-                                            <div className={classes.Container}>
-                                            <Typography className={classes.title} variant="subtitle1">{item.name}</Typography>
-                                            <Typography variant="caption">Fork: {item.forks_count}</Typography>
-                                            <Typography variant="caption">Stars: {item.stargazers_count}</Typography>
-                                            <Typography variant="caption">Watcher: {item.watchers}</Typography>
-                                            </div>
-                                            <Button  variant="contained" color="primary">
-                                                <a target="_blank" rel="noopener noreferrer"className={classes.btn} href={item.html_url}>{item.name}</a>
-                                            </Button>
-                                        </CardContent>
-                                    </Card>
-                                )
-                            })
-                        }
+                        {githubContainer}
                     </Grid>
+                    <br />
                 </Container>
         )
     }

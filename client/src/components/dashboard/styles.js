@@ -15,6 +15,10 @@ const styles = makeStyles(theme => ({
         color:'#fff',
         margin:'0 10px 5px 0',
 
+        [theme.breakpoints.down('sm')] : {
+           fontSize:'10px'
+        },
+
         '&:hover' : {
             backgroundColor:'#333'
         }
