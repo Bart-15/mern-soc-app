@@ -1,2 +1,2 @@
 # mern-soc-app
-## Live -> https://still-waters-54867.herokuapp.com/
+## Live -> https://murmuring-wave-58893.herokuapp.com/
